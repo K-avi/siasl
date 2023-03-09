@@ -1,0 +1,37 @@
+SIASL : 
+    -will support 13 base instructions; 
+    -parsers using flex/bison : 
+        - brainfuck like parser 
+        - unary like parser but 4 bits instead of 3 
+    -command line and file interpreter 
+
+    -sigint handling could be nice (free stuff before dying)
+
+
+
+(SIASL)² 1.0: 
+    -will support default combined instructions 
+    -UTF-8 parser; BF-like parser; Number parser
+
+(SIASL)² 2.0: 
+    
+    -will support defining behavior for symbols
+    -will support redefining behavior for existing symbols (oh boy!)
+
+SIASL base: 
+
+    instruction support: done 
+
+    brainfuck like parser: done 
+
+    unary like parser : not done
+
+    frontend of the interpreter w getops() fgets() and yy_scan_string() : done
+
+    command line interpreter : not finished
+
+    file reading: yes
+
+    better error handling (print stuff when shit goes bad) : not done
+    
+    sigint handling: gimme a sec
