@@ -1,39 +1,22 @@
-TARGET := siasl
+TARGET:= siasl
+TEST :=test
 
-TEST := test
-CC := gcc
-CFLAGS := -O2 -Wall -Wextra -Wpedantic
-CLIBS := -lfl
+ALLPROGS= $(TARGET) $(TEST)
 
-LEX := flex
-LFLAGS :=
+.PHONY:	all clean
 
-YACC := bison
-YFLAGS := -v -d
+all: $(ALLPROGS)
+progs: $(PROGRAMS)
 
-SRCS := exec.c ast.c cells.c stack.c cmdline_interp.c
+test: 
+	$(MAKE) -C src/ ../test
 
-all: $(TARGET)
+$(TARGET): 
+	$(MAKE) -C src/ ../siasl
 
-debug: CFLAGS += -DDEBUG -g
-debug: LFLAGS += --debug
-debug: YFLAGS += --debug
-debug: $(TARGET)
-
-$(TARGET): lex.yy.c parser.tab.c $(SRCS) main.c
-	$(CC) $(CFLAGS) $^ -o $(TARGET) $(CLIBS)
-
-
-$(TEST): lex.yy.c parser.tab.c $(SRCS) main_test.c
-	$(CC) $(CFLAGS) $^ -o $(TEST) $(CLIBS)
-
-lex.yy.c lex.yy.h: lexer.l parser.tab.h
-	$(LEX) $(LFLAGS) $<
-
-
-parser.tab.c parser.tab.h: parser.y
-	$(YACC) $(YFLAGS) $<
 
 clean:
-	rm -f parser.tab.* parser.output lex.*.* $(TARGET) $(TEST)
+	$(MAKE) -C src/ clean
+	rm -f $(ALLPROGS)
+
 .PHONY: clean

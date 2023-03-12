@@ -16,6 +16,7 @@
 #include <sys/types.h>
 
 
+
 #define PARSE (if(bfmode) {yyparse();} else {hhparse();})
 
 extern instruction * prog;
