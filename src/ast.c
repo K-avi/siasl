@@ -29,6 +29,8 @@ instruction * add_instruction( instruction* program, instruction * instruct){
 
 void free_instruct( instruction* parsed_prog){
     
+    if(!parsed_prog) return;
+    
     instruction* tmp= parsed_prog, *tmp1=parsed_prog;
   
     while (tmp){

@@ -3,6 +3,7 @@
 #include "cmdline_interp.h"
 #include "exec.h"
 #include "stack.h"
+#include "globals.h"
 
 
 #include "lex.yy.h"
@@ -15,14 +16,28 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
+#include <signal.h>
 
-
-#define PARSE (if(bfmode) {yyparse();} else {hhparse();})
 
 extern instruction * prog;
 
+void sigint_handler( int sig){
+    if(!progempty) {
+        free_instruct(prog);
+    }
+    if(environment) free_mat(environment);
+    if(stack) free_stack(stack);
+
+    yylex_destroy();
+    
+    exit (SIGINT);
+
+    return;
+}
+
 int main(int argc, char ** argv){  
 
+    signal(SIGINT, *sigint_handler );
 
     u_char cmdline_mode=1, file_mode=0;
 
@@ -76,8 +91,8 @@ int main(int argc, char ** argv){
 
     
     /*initialising environment and stack ; prog is initialised by parser.tab.c*/
-    CELLMATRIX * environment= init_mat(DEFAULT_ROWSIZE);
-    S_STACK* stack= init_stack(STACK_SIZE);
+    environment= init_mat(DEFAULT_ROWSIZE);
+    stack= init_stack(STACK_SIZE);
 
     if (cmdline_mode) {
 
@@ -96,6 +111,7 @@ int main(int argc, char ** argv){
                 exit(-1);
             }
             yyparse();
+            progempty=0;
             fclose(yyin);
       
         
@@ -110,6 +126,7 @@ int main(int argc, char ** argv){
         free_mat(environment);
         free_stack(stack);
         free_instruct(prog);
+        progempty=1;
     
 
         yylex_destroy();

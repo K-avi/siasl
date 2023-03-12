@@ -11,7 +11,7 @@ LFLAGS :=
 YACC := bison
 YFLAGS := -v -d
 
-SRCS := exec.c ast.c cells.c stack.c cmdline_interp.c
+SRCS := exec.c ast.c cells.c stack.c globals.c cmdline_interp.c
 
 all: $(TARGET)
 
@@ -35,6 +35,6 @@ parser.tab.c parser.tab.h: parser.y
 	$(YACC) $(YFLAGS) $<
 
 clean:
-	rm -f parser.tab.* parser.output lex.*.* 
+	rm -f parser.tab.* parser.output lex.*.*  
 	
 .PHONY: clean

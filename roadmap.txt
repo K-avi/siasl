@@ -2,10 +2,10 @@ SIASL :
     -will support 13 base instructions; 
     -parsers using flex/bison : 
         - brainfuck like parser 
-        - unary like parser but 4 bits instead and hexadecimal characters ! (yay !) ; maybe later
+       
     -command line and file interpreter 
 
-    -sigint handling could be nice (free stuff before dying)
+
 
 
 
@@ -22,7 +22,6 @@ SIASL base:
 
     instruction support: done 
 
-    brainfuck like parser: done 
 
     unary like parser : not done
 
@@ -32,6 +31,6 @@ SIASL base:
 
     file reading: yes
 
-    better error handling (print stuff when shit goes bad) : not done
-    
-    sigint handling: gimme a sec
+
+at some point do sigint handling (may have to use globals)
+at some point do lexer from integer to hex and from hex to bf symbols

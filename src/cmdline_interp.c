@@ -1,6 +1,6 @@
 #include "cmdline_interp.h"
 #include "ast.h"
-
+#include "globals.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -37,16 +37,17 @@ void interactive_interp( CELLMATRIX * environment, S_STACK * stack){
          }
          
          yy_scan_string(line);
-
+         progempty=0;
          yyparse(); 
 
          parsed_to_int(prog);
  
          exec_prgm(prog, environment, stack);
-
+         
          
       
-          free_instruct(prog);     
+          free_instruct(prog); 
+          progempty=1;    
           yylex_destroy();
 
         if(strchr(line, '.')){
