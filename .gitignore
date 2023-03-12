@@ -1,1 +1,9 @@
-trash *.yy.c *.yy.h *.tab.c *.tab.h *.output roadmap.txt trash/ trash/*
+trash 
+*.yy.c 
+*.yy.h 
+*.tab.c 
+*.tab.h 
+*.output 
+roadmap.txt 
+trash/ 
+trash/*
