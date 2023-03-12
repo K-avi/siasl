@@ -457,7 +457,7 @@ char *yytext;
 #line 1 "lexer.l"
 /* based on the brainflex lex.l file https://github.com/lagerfeuer/brainflex/blob/main/src/lexer.l */
 #define YY_NO_INPUT 1
-#line 7 "lexer.l"
+#line 8 "lexer.l"
   #include "parser.tab.h"
   #define TOKEN(t) yylval.token = (t)
 #line 464 "lex.yy.c"
@@ -676,7 +676,7 @@ YY_DECL
 		}
 
 	{
-#line 11 "lexer.l"
+#line 12 "lexer.l"
 
 
 #line 683 "lex.yy.c"
@@ -739,97 +739,97 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 13 "lexer.l"
+#line 14 "lexer.l"
 { ; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 14 "lexer.l"
+#line 15 "lexer.l"
 { return TOKEN(PRINT); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 15 "lexer.l"
+#line 16 "lexer.l"
 { return TOKEN(READ); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 16 "lexer.l"
+#line 17 "lexer.l"
 { return TOKEN(RIGHT); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 17 "lexer.l"
+#line 18 "lexer.l"
 { return TOKEN(LEFT); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 18 "lexer.l"
+#line 19 "lexer.l"
 { return TOKEN(UP); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 19 "lexer.l"
+#line 20 "lexer.l"
 { return TOKEN(DOWN); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 20 "lexer.l"
+#line 21 "lexer.l"
 { return TOKEN(PLUS); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 21 "lexer.l"
+#line 22 "lexer.l"
 { return TOKEN(MINUS); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 22 "lexer.l"
+#line 23 "lexer.l"
 { return TOKEN(MULT);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 23 "lexer.l"
+#line 24 "lexer.l"
 { return TOKEN(DIV);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 24 "lexer.l"
+#line 25 "lexer.l"
 { return TOKEN(LBRACKET); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 25 "lexer.l"
+#line 26 "lexer.l"
 { return TOKEN(RBRACKET); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 26 "lexer.l"
+#line 27 "lexer.l"
 { return TOKEN(NEUTRAL); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 27 "lexer.l"
+#line 28 "lexer.l"
 { return TOKEN(NEUTRAL); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 28 "lexer.l"
+#line 29 "lexer.l"
 { return TOKEN(NEUTRAL); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 29 "lexer.l"
+#line 30 "lexer.l"
 { return TOKEN(NEUTRAL); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 31 "lexer.l"
+#line 32 "lexer.l"
 { ; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 33 "lexer.l"
+#line 34 "lexer.l"
 ECHO;
 	YY_BREAK
 #line 836 "lex.yy.c"
@@ -1800,5 +1800,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 33 "lexer.l"
+#line 34 "lexer.l"
 

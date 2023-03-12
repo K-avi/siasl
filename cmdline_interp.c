@@ -1,6 +1,5 @@
 #include "cmdline_interp.h"
 #include "ast.h"
-#include "lex.yy.h"
 
 
 #include <stdio.h>
@@ -29,7 +28,7 @@ void interactive_interp( CELLMATRIX * environment, S_STACK * stack){
 
          while(*tmp==' '|| *tmp=='\t' || *tmp=='\n') ++tmp;
          if((*tmp)=='\0') {
-            printf("\n>>> ");
+            printf(">>> ");
             continue;
          }
        

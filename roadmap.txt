@@ -2,7 +2,7 @@ SIASL :
     -will support 13 base instructions; 
     -parsers using flex/bison : 
         - brainfuck like parser 
-        - unary like parser but 4 bits instead of 3 
+        - unary like parser but 4 bits instead and hexadecimal characters ! (yay !) ; maybe later
     -command line and file interpreter 
 
     -sigint handling could be nice (free stuff before dying)
@@ -28,7 +28,7 @@ SIASL base:
 
     frontend of the interpreter w getops() fgets() and yy_scan_string() : done
 
-    command line interpreter : not finished
+    command line interpreter : done
 
     file reading: yes
 

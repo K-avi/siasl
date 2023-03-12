@@ -2,9 +2,11 @@
 #include "ast.h"
 #include "cmdline_interp.h"
 #include "exec.h"
-#include "parser.tab.h"
 #include "stack.h"
+
+
 #include "lex.yy.h"
+#include "parser.tab.h"
 
 
 #include <ctype.h>
@@ -14,25 +16,29 @@
 #include <sys/types.h>
 
 
+#define PARSE (if(bfmode) {yyparse();} else {hhparse();})
 
 extern instruction * prog;
 
 int main(int argc, char ** argv){  
 
 
-    u_char printAst = 0, cmdline_mode=1, file_mode=0;
+    u_char cmdline_mode=1, file_mode=0;
+
+
+    u_char helpset=0;
+
     char* filename = NULL;
     int c;
 
-    /*initialising environment and stack ; prog is initialised by parser.tab.c*/
-    CELLMATRIX * environment= init_mat(DEFAULT_ROWSIZE);
-    S_STACK* stack= init_stack(STACK_SIZE);
 
-    while ((c = getopt(argc, argv, "cpf:")) != -1) {
+
+    while ((c = getopt(argc, argv, "hcf:")) != -1) {
         
         switch (c) {
-        case 'p':
-            printAst = 1;
+      
+        case 'h':
+            helpset=1;;
             break;
         case 'f':
             filename = optarg;
@@ -44,6 +50,7 @@ int main(int argc, char ** argv){
             cmdline_mode=1;
             file_mode=0;
             break;
+      
         case '?':
             if (optopt == 'f')
             fprintf(stderr, "Option -%c requires an argument.\n", optopt);
@@ -51,15 +58,25 @@ int main(int argc, char ** argv){
             fprintf(stderr, "Unknown option `-%c'.\n", optopt);
             else
             fprintf(stderr, "Unknown option character `\\x%x'.\n", optopt);
-            free_mat(environment);
-            free_stack(stack);
+       
             exit(-2);
         default:
-            free_mat(environment);
-            free_stack(stack);
             abort();
         }
     }
+
+    if(helpset){
+
+        printf("placeholder\n"); 
+
+        exit(0);
+
+    }
+
+    
+    /*initialising environment and stack ; prog is initialised by parser.tab.c*/
+    CELLMATRIX * environment= init_mat(DEFAULT_ROWSIZE);
+    S_STACK* stack= init_stack(STACK_SIZE);
 
     if (cmdline_mode) {
 
@@ -70,13 +87,16 @@ int main(int argc, char ** argv){
 
          return 0;
     }else if(file_mode){
-        yyin = fopen(filename, "r");
-        if (!yyin) {
-            perror("Could not open file");
-            exit(-1);
-        }
-        yyparse();
-        fclose(yyin);
+
+        
+            yyin = fopen(filename, "r");
+            if (!yyin) {
+                perror("Could not open file");
+                exit(-1);
+            }
+            yyparse();
+            fclose(yyin);
+      
         
 
         /*parsing everything*/
@@ -93,14 +113,6 @@ int main(int argc, char ** argv){
 
         yylex_destroy();
     }
-    if (printAst) {
-        printf("program at exit: \n");
-        printprgm(prog);
-        printf("env at exit: \n");
-        print_mat(environment);
-    }
-
-    
 
     return 0;
 }

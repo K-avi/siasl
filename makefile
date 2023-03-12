@@ -1,6 +1,7 @@
 TARGET := siasl
+
 TEST := test
-CC ?= gcc
+CC := gcc
 CFLAGS := -O2 -Wall -Wextra -Wpedantic
 CLIBS := -lfl
 
@@ -29,9 +30,10 @@ $(TEST): lex.yy.c parser.tab.c $(SRCS) main_test.c
 lex.yy.c lex.yy.h: lexer.l parser.tab.h
 	$(LEX) $(LFLAGS) $<
 
+
 parser.tab.c parser.tab.h: parser.y
 	$(YACC) $(YFLAGS) $<
 
 clean:
-	rm -rf parser.tab.c parser.tab.h lex.yy.c $(TARGET)
+	rm -f parser.tab.* parser.output lex.*.* $(TARGET) $(TEST)
 .PHONY: clean
