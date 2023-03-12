@@ -9,6 +9,8 @@
 #include "lex.yy.h"
 #include "parser.tab.h"
 
+#include "lex.hh.h"
+
 
 #include <ctype.h>
 #include <string.h>
@@ -41,6 +43,8 @@ int main(int argc, char ** argv){
 
     u_char cmdline_mode=1, file_mode=0;
 
+    u_char simode=1 , hexmode=0;
+
 
     u_char helpset=0;
 
@@ -49,12 +53,22 @@ int main(int argc, char ** argv){
 
 
 
-    while ((c = getopt(argc, argv, "hcf:")) != -1) {
+    while ((c = getopt(argc, argv, "xshcf:")) != -1) {
         
         switch (c) {
       
         case 'h':
             helpset=1;;
+            break;
+        case 'x':
+            
+            simode=0;
+            hexmode=1;
+            break;
+        case 's':
+            
+            simode=1;
+            hexmode=0;
             break;
         case 'f':
             filename = optarg;
@@ -83,7 +97,7 @@ int main(int argc, char ** argv){
 
     if(helpset){
 
-        printf("placeholder\n"); 
+        printf("SIASL is a brainfuck like esolang; the options available are:\n-f to read a file\n-c to use the command line interactive interpret\n-x to use SIASL in hex mode;\n-s to use SIASL in symbol mode\nmore informations on the SIASL lang can be found in the README.txt file.\n"); 
 
         exit(0);
 
@@ -96,30 +110,79 @@ int main(int argc, char ** argv){
 
     if (cmdline_mode) {
 
-         interactive_interp(environment, stack);
+        if(hexmode){
+            interactive_interp(environment, stack, 'x');
 
-         free_mat(environment);
-         free_stack(stack);
+            free_mat(environment);
+            free_stack(stack);
+        }else if(simode){
+
+            interactive_interp(environment, stack, 's');
+
+            free_mat(environment);
+            free_stack(stack);
+        }else{
+            
+            fprintf(stderr ,"mode is neiter siasl nor hexa; exiting\n");
+
+            free_mat(environment);
+            free_stack(stack);
+
+            exit(-2);
+        }
 
          return 0;
+         
     }else if(file_mode){
 
-        
-            yyin = fopen(filename, "r");
-            if (!yyin) {
-                perror("Could not open file");
-                exit(-1);
-            }
-            yyparse();
-            progempty=0;
-            fclose(yyin);
-      
-        
+            if(hexmode){
 
-        /*parsing everything*/
+                char* tmpfile_name= malloc(strnlen(filename, 256)+5);
+                sprintf(tmpfile_name, "%s.tmp", filename);
+
+                FILE * fsource =fopen(filename, "r");
+                FILE * fdest = fopen(tmpfile_name, "w");
+
+                hhin= fsource; 
+                hhout = fdest ;
+
+                hhlex();
+                hhlex_destroy();
+
+                fclose(fsource);
+                fclose(fdest);
+
+                yyin= fopen(tmpfile_name,"r");
+
+                yyparse();
+                progempty=0;
+
+                fclose(yyin);
+                remove(tmpfile_name);
+                free(tmpfile_name);
+
+            }else if(simode){
+        
+                yyin = fopen(filename, "r");
+                if (!yyin) {
+                    perror("Could not open file");
+                    exit(-1);
+                }
+                yyparse();
+                progempty=0;
+                fclose(yyin);
+            }else{
+                fprintf(stderr ,"mode is neiter siasl nor hexa; exiting\n");
+
+                free_mat(environment);
+                free_stack(stack);
+
+                exit(-2);
+            }
+
+        /*translating prog and executing*/
     
         parsed_to_int(prog);
-        
         exec_prgm(prog, environment, stack);
 
         /*freeing everything after exec*/
@@ -127,10 +190,8 @@ int main(int argc, char ** argv){
         free_stack(stack);
         free_instruct(prog);
         progempty=1;
-    
 
         yylex_destroy();
     }
-
     return 0;
 }

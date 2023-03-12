@@ -20,7 +20,7 @@ debug: LFLAGS += --debug
 debug: YFLAGS += --debug
 debug: $(TARGET)
 
-$(TARGET): lex.yy.c parser.tab.c $(SRCS) main.c
+$(TARGET): lex.yy.c parser.tab.c lex.hh.c $(SRCS) main.c
 	$(CC) $(CFLAGS) $^ -o $(TARGET) $(CLIBS)
 
 
@@ -28,6 +28,9 @@ $(TEST): lex.yy.c parser.tab.c $(SRCS) main_test.c
 	$(CC) $(CFLAGS) $^ -o $(TEST) $(CLIBS)
 
 lex.yy.c lex.yy.h: lexer.l parser.tab.h
+	$(LEX) $(LFLAGS) $<
+
+lex.hh.c lex.hh.h: hxTOsi.l
 	$(LEX) $(LFLAGS) $<
 
 

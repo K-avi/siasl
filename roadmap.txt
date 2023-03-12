@@ -23,7 +23,7 @@ SIASL base:
     instruction support: done 
 
 
-    unary like parser : not done
+    unary like parser : not really done but it kinda works ig (it's awful)
 
     frontend of the interpreter w getops() fgets() and yy_scan_string() : done
 
@@ -31,6 +31,4 @@ SIASL base:
 
     file reading: yes
 
-
-at some point do sigint handling (may have to use globals)
-at some point do lexer from integer to hex and from hex to bf symbols
+    sigint handling : done

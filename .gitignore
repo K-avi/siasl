@@ -9,3 +9,6 @@ trash/
 trash/*
 siasl 
 *.o
+*.hh.c
+*.hh.h
+
